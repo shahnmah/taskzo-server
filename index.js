@@ -32,6 +32,30 @@ async function run() {
             res.send(newTask)
         });
 
+        // // api for update 
+        // app.put('/task/:id', async (req, res) => {
+        //     const id = req.params.id;
+        //     const data = req.body;
+        //     const filter = { _id: ObjectId(id) };
+        //     const options = { upsert: true };
+        //     const updateDoc = {
+        //         $set: {
+        //             task: data.task
+        //         },
+        //     };
+        //     const result = await taskCollection.updateOne(filter, updateDoc, options);
+        //     res.send(result)
+        // })
+
+
+        // delete product using id
+        app.delete('/task/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const deleteItem = await taskCollection.deleteOne(query);
+            res.send(deleteItem)
+        })
+
     }
     finally {
 
