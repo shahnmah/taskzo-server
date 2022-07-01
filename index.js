@@ -16,6 +16,7 @@ async function run() {
     try {
         await client.connect();
         const taskCollection = client.db('taskCollection').collection('task');
+        const completedTaskCollection = client.db('completedTaskCollection').collection('completedTask');
 
         // get api for load all task
         app.get('/task', async (req, res) => {
@@ -56,6 +57,12 @@ async function run() {
             res.send(deleteItem)
         })
 
+          // completed task add  
+          app.post('/completedTask', async (req, res) => {
+            const data = req.body;
+            const completedTask = await completedTaskCollection.insertOne(data)
+            res.send(completedTask)
+        });
     }
     finally {
 
