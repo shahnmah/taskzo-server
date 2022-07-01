@@ -33,20 +33,6 @@ async function run() {
             res.send(newTask)
         });
 
-        // // api for update 
-        // app.put('/task/:id', async (req, res) => {
-        //     const id = req.params.id;
-        //     const data = req.body;
-        //     const filter = { _id: ObjectId(id) };
-        //     const options = { upsert: true };
-        //     const updateDoc = {
-        //         $set: {
-        //             task: data.task
-        //         },
-        //     };
-        //     const result = await taskCollection.updateOne(filter, updateDoc, options);
-        //     res.send(result)
-        // })
 
 
         // delete product using id
@@ -63,6 +49,15 @@ async function run() {
             const completedTask = await completedTaskCollection.insertOne(data)
             res.send(completedTask)
         });
+
+         // get api for load all completed task
+         app.get('/completedTasks', async (req, res) => {
+            const query = {};
+            const cursor = completedTaskCollection.find(query);
+            const completedTasks = await cursor.toArray();
+            res.send(completedTasks);
+        });
+
     }
     finally {
 
